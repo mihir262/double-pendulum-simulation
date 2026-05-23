@@ -2,13 +2,13 @@
 #include <raylib.h>
 #include <math.h>
 
-#define WIDTH 800
+#define WIDTH 1000
 #define HEIGHT 800
 #define MASS_RADIUS 20
 #define LINE_THICKNESS 4
 #define L1 250
 #define L2 200
-#define g 1000
+#define g 2000
 
 float l1, l2, phi1, phi2, phi1_d, phi2_d, phi1_dd, phi2_dd, m1, m2;
 
@@ -72,8 +72,8 @@ void step(float dt){
 void init_solver(){
     l1 = L1;
     l2 = L2;
-    phi1 = GetRandomValue(-90,90)*DEG2RAD;
-    phi2 = GetRandomValue(-90,90)*DEG2RAD;
+    phi1 = GetRandomValue(0,360)*DEG2RAD;
+    phi2 = GetRandomValue(0,360)*DEG2RAD;
     phi1_d = 0;
     phi2_d = 0;
     m1 = 1;
@@ -88,11 +88,15 @@ int main(){
     SetTargetFPS(60);
 
     while(!WindowShouldClose()){
+        if (IsKeyPressed(KEY_SPACE)) {
+            init_solver();
+        }
         float dt = GetFrameTime();
         step(dt);
         BeginDrawing();
         ClearBackground(BLACK);
         draw_double_pendulum(start, phi1, phi2, l1, l2);
+        DrawText("Press SPACE to restart", 16, HEIGHT - 32, 20, RAYWHITE);
         EndDrawing();
     }
     return 0;
