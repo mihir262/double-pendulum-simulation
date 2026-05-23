@@ -118,19 +118,3 @@ $$\theta_1'' = \frac{-g (2 m_1 + m_2) \sin\theta_1 - m_2 g \sin(\theta_1 - 2\the
 $$\theta_2'' = \frac{2 \sin(\theta_1 - \theta_2) \left(\theta_1'^2 L_1 (m_1 + m_2) + g (m_1 + m_2) \cos\theta_1 + \theta_2'^2 L_2 m_2 \cos(\theta_1 - \theta_2)\right)}{L_2 \left(2 m_1 + m_2 - m_2 \cos(2\theta_1 - 2\theta_2)\right)}$$
 
 These are the equations of motion for the double pendulum.
-
-### Numerical Solution
-
-Convert the two second-order equations into four first-order equations by defining:
-
-- $\omega_1$ = angular velocity of top rod  
-- $\omega_2$ = angular velocity of bottom rod
-
-Then:
-
-$$\theta_1' = \omega_1$$
-$$\theta_2' = \omega_2$$
-$$\omega_1' = \frac{-g (2 m_1 + m_2) \sin\theta_1 - m_2 g \sin(\theta_1 - 2\theta_2) - 2 \sin(\theta_1 - \theta_2) m_2 (\omega_2^2 L_2 + \omega_1^2 L_1 \cos(\theta_1 - \theta_2))}{L_1 \left(2 m_1 + m_2 - m_2 \cos(2\theta_1 - 2\theta_2)\right)}$$
-$$\omega_2' = \frac{2 \sin(\theta_1 - \theta_2) \left(\omega_1^2 L_1 (m_1 + m_2) + g (m_1 + m_2) \cos\theta_1 + \omega_2^2 L_2 m_2 \cos(\theta_1 - \theta_2)\right)}{L_2 \left(2 m_1 + m_2 - m_2 \cos(2\theta_1 - 2\theta_2)\right)}$$
-
-This is now exactly the form needed for the numerical solution of the system.
