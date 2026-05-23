@@ -1,4 +1,4 @@
-CC = clang
+CC = gcc
 CFLAGS = -Wall -Wextra -std=c17 -I/opt/homebrew/include
 LDFLAGS = -L/opt/homebrew/lib -lraylib \
 		   -framework Cocoa \
