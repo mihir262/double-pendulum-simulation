@@ -37,8 +37,6 @@ Kinematics describes position, velocity, and acceleration without considering fo
 
 ![Double pendulum diagram](assets/double-pendulum-diagram.png)
 
-# Double Pendulum — Equations of Motion
-
 ## Setup
 
 Place the origin at the fixed pivot. Angles $\theta_1, \theta_2$ are measured from vertical (counter-clockwise positive). $T_1, T_2$ are rod tensions.
