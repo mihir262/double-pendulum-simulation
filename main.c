@@ -8,7 +8,7 @@
 #define LINE_THICKNESS 4
 #define L1 250
 #define L2 200
-#define g 9.81
+#define g 1000
 
 float l1, l2, phi1, phi2, phi1_d, phi2_d, phi1_dd, phi2_dd, m1, m2;
 
@@ -28,35 +28,45 @@ void draw_double_pendulum(Vector2 start, float phi1, float phi2, float l1, float
     draw_pendulum(l1, start, phi1);
 }
 
-void step(){
+void step(float dt){
+
+    //angular acceleration (double derivative of the angle)
     phi1_dd =
     (
         -g * (2 * m1 + m2) * sin(phi1)
         - m2 * g * sin(phi1 - 2 * phi2)
         - 2 * sin(phi1 - phi2) * m2 *
           (
-              phi2_d * phi2_d * L2 +
-              phi1_d * phi1_d * L1 * cos(phi1 - phi2)
+              phi2_d * phi2_d * l2 +
+              phi1_d * phi1_d * l1 * cos(phi1 - phi2)
           )
     )
     /
     (
-        L1 * (2 * m1 + m2 - m2 * cos(2 * phi1 - 2 * phi2))
+        l1 * (2 * m1 + m2 - m2 * cos(2 * phi1 - 2 * phi2))
     );
     
     phi2_dd =
     (
         2 * sin(phi1 - phi2) *
         (
-            phi1_d * phi1_d * L1 * (m1 + m2)
+            phi1_d * phi1_d * l1 * (m1 + m2)
             + g * (m1 + m2) * cos(phi1)
-            + phi2_d * phi2_d * L2 * m2 * cos(phi1 - phi2)
+            + phi2_d * phi2_d * l2 * m2 * cos(phi1 - phi2)
         )
     )
     /
     (
-        L2 * (2 * m1 + m2 - m2 * cos(2 * phi1 - 2 * phi2))
+        l2 * (2 * m1 + m2 - m2 * cos(2 * phi1 - 2 * phi2))
     ); 
+
+    //angular velocity
+    phi1_d += phi1_dd * dt;
+    phi2_d += phi2_dd * dt;
+
+    //angles
+    phi1 += phi1_d * dt;
+    phi2 += phi2_d * dt;
 }
 
 void init_solver(){
@@ -78,7 +88,10 @@ int main(){
     SetTargetFPS(60);
 
     while(!WindowShouldClose()){
+        float dt = GetFrameTime();
+        step(dt);
         BeginDrawing();
+        ClearBackground(BLACK);
         draw_double_pendulum(start, phi1, phi2, l1, l2);
         EndDrawing();
     }
